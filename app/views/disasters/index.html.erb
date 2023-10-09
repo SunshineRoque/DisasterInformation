@@ -1,0 +1,13 @@
+<h1>Disaster Type</h1>
+
+<ul>
+  <% @disasters.each do |disaster| %>
+    <li>
+      <%= disaster.name %>
+      <%= link_to :edit, edit_disaster_path(disaster) %>
+      <%= button_to :delete, disaster_path(disaster), method: :delete %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'new', new_disaster_path %>
