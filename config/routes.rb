@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :disasters, except: :show
   resources :posts
+  resources :posts do
+    resources :comments
+  end
 end
