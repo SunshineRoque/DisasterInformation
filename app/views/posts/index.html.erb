@@ -4,12 +4,15 @@
   <td>Title</td>
   <td>Content</td>
   <td>Address</td>
+  <td>Disaster Type</td>
+  <td>Action</td>
   </thead>
   <% @posts.each do |post| %>
     <tr>
       <td><%= post.title %></td>
       <td><%= post.content %></td>
       <td><%= post.address %></td>
+      <td><%= post.disasters.pluck(:name).join(',') %></td>
       <td></td>
       <td>
         <%= link_to 'Show', post_path(post) %>

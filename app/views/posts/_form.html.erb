@@ -18,5 +18,8 @@
     <%= form.label :address %>
     <%= form.text_field :address %>
   </div>
+  <div>
+    <%= form.collection_check_boxes :disaster_ids, Disaster.all, :id, :name %>
+  </div>
   <%= form.submit %>
 <% end %>
