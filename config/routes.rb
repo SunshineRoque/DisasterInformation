@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'welcome#index'
   resources :disasters, except: :show
+  resources :posts
 end
