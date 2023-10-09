@@ -1,0 +1,2 @@
+class PostDisasterShip < ApplicationRecord
+end
