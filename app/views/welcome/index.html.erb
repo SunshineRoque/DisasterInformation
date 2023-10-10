@@ -2,6 +2,7 @@
 <h1>Posts</h1>
 <table>
   <thead>
+  <td>Author</td>
   <td>Title</td>
   <td>image</td>
   <td>Content</td>
@@ -11,6 +12,7 @@
   </thead>
   <% @posts.each do |post| %>
     <tr>
+      <td><%= post.user&.email %></td>
       <td><%= post.title %></td>
       <td><%= image_tag post.image.url if post.image.present? %></td>
       <td><%= post.content %></td>
