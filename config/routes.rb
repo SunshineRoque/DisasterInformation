@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   resources :disasters, except: :show
   resources :posts
   resources :posts do
-    resources :comments
+    resources :comments, except: :show
   end
 end
