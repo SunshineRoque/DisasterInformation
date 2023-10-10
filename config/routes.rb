@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :comments, except: :show
   end
 
-  resource :user, except:[:new, :edit, :show, :update, :destroy, :create] do
+  namespace :user do
     resources :posts, only: :index
     resources :comments, only: :index
   end

@@ -1,10 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @posts = Post.includes(:disasters, :user).all.ordered_by_comments_count
-  end
-
   def new
     @post = Post.new
   end

@@ -5,4 +5,17 @@
   <li><%= @post.address %></li>
 </ul>
 
+<h1>Title <%= @post.title %></h1>
+<h2>Comments</h2>
+<ul>
+  <% @post.comments.each do |comment| %>
+    <li>
+      <%= comment.content %>(<%= comment.created_at %>)
+      <%= link_to 'Edit', edit_post_comment_path(@post) %>
+      <%= button_to 'Delete', post_comment_path(@post), method: :delete %>
+    </li>
+  <% end %>
+</ul>
+
+
 <%= link_to 'Post List', root_path %>
