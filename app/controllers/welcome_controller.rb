@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   def index
-    @posts = Post.includes(:disasters, :user).all
+    @top_posts = Post.top_posts
+    @posts = Post.includes(:disasters, :user).all.ordered_by_comments_count
     @posts = @posts.page(params[:page]).per(5)
   end
 end

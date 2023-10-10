@@ -8,4 +8,12 @@ class Post < ApplicationRecord
   has_many :comments
 
   belongs_to :user
+
+  scope :ordered_by_comments_count, -> {
+    left_joins(:comments)
+      .group(:id)
+      .order('COUNT(comments.id) DESC')
+      .select('posts.*, COUNT(comments.id) as comments_count')
+  }
+  scope :top_posts, -> { left_joins(:comments).group(:id).order('COUNT(comments.id) DESC').limit(3) }
 end
