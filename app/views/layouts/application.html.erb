@@ -8,9 +8,64 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+  <style>
+      .pagination {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+      }
+
+      .pagination li {
+          margin: 5px 8px;
+      }
+
+      .pagination a {
+          padding: 5px 10px;
+          border: 1px solid #ccc;
+          text-decoration: none;
+          color: purple;
+          border-radius: 3px;
+      }
+
+      .pagination .active a {
+          background: linear-gradient(purple, violet, purple);
+          border: 1px solid black;
+          color: #fff;
+      }
+
+  </style>
+
 </head>
 
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">DisasterInformation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to 'Home', root_path, class: "nav-link #{'active' if action_name == 'index' }", 'aria-current': 'page' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Add New Post', new_post_path, class: "nav-link #{'active' if action_name == 'posts' }", 'aria-current': 'page' if user_signed_in? %>
+        </li>
+        <li class="nav-item">
+          <% if user_signed_in? %>
+            <%= link_to 'Sign Out', destroy_user_session_path, data: { 'turbo-method': :delete }, class: "nav-link #{'active' if action_name == 'sign in' }", 'aria-current': 'page' %>
+          <% else %>
+            <%= link_to 'Sign In', new_user_session_path, class: "nav-link #{'active' if action_name == 'sign in' }", 'aria-current': 'page' %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <% if flash[:notice] %>
   <p class="notice"><%= notice %></p>
 <% end %>
@@ -18,5 +73,6 @@
   <p class="alert"><%= alert %></p>
 <% end %>
 <%= yield %>
+
 </body>
 </html>

@@ -1,8 +1,30 @@
-<h1>Welcome User</h1>
-
-<% if user_signed_in? %>
-  <h2> Hello <%= current_user.email %> </h2>
-  <%= link_to 'Sign out', destroy_user_session_path, data: { 'turbo-method': :delete } %>
-<% else %>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+<h1>Welcome to DisasterInformation!</h1>
+<h1>Posts</h1>
+<table>
+  <thead>
+  <td>Title</td>
+  <td>Content</td>
+  <td>Address</td>
+  <td>Disaster Type</td>
+  <td>Action</td>
+  </thead>
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.content %></td>
+      <td><%= post.address %></td>
+      <td><%= post.disasters.pluck(:name).join(',') %></td>
+      <td></td>
+      <td>
+        <%= link_to 'Show', post_path(post) %>
+        <%= link_to 'Comments', post_comments_path(post) %>
+        <%= link_to 'New Comment', new_post_comment_path(post) %>
+        <% if user_signed_in? && post.user == current_user %>
+          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-warning' %>
+          <%= button_to 'Delete', post_path(post), method: :delete, class: 'btn btn-danger' %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<div class="paginate"><%= paginate @posts %></div>

@@ -1,22 +1,18 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: :show
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @posts = Post.includes(:disasters).all
-  end
+  before_action :validate_post_owner, only: [:edit, :update, :destroy]
 
   def new
     @post = Post.new
   end
 
-  def edit
-  end
-
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     if @post.save
       flash[:notice] = 'Post created successfully'
-      redirect_to posts_path
+      redirect_to root_path
     else
       flash.now[:alert] = 'Post create failed'
       render :new, status: :unprocessable_entity
@@ -30,7 +26,7 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       flash[:notice] = 'Post updated successfully'
-      redirect_to posts_path
+      redirect_to root_path
     else
       flash.now[:alert] = 'Post update failed'
       render :edit, status: :unprocessable_entity
@@ -40,10 +36,17 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:notice] = 'Post destroyed successfully'
-    redirect_to posts_path
+    redirect_to root_path
   end
 
   private
+
+  def validate_post_owner
+    unless @post.user == current_user
+      flash[:notice] = 'the post not belongs to you'
+      redirect_to root_path
+    end
+  end
 
   def set_post
     @post = Post.find(params[:id])
