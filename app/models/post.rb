@@ -8,6 +8,7 @@ class Post < ApplicationRecord
   has_many :comments
 
   belongs_to :user
+  mount_uploader :image, ImageUploader
 
   scope :ordered_by_comments_count, -> {
     left_joins(:comments)
