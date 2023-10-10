@@ -1,15 +1,17 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: :show
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :validate_post_owner, only: [:edit, :update, :destroy]
+
+  def index
+    @posts = Post.includes(:disasters, :user).all.ordered_by_comments_count
+  end
 
   def new
     @post = Post.new
   end
 
+
   def create
     @post = Post.new(post_params)
-    @post.user = current_user
     if @post.save
       flash[:notice] = 'Post created successfully'
       redirect_to root_path
@@ -41,18 +43,11 @@ class PostsController < ApplicationController
 
   private
 
-  def validate_post_owner
-    unless @post.user == current_user
-      flash[:notice] = 'the post not belongs to you'
-      redirect_to root_path
-    end
-  end
-
   def set_post
     @post = Post.find(params[:id])
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :address, :image, disaster_ids: [])
+    params.require(:post).permit(:title, :content, :address, disaster_ids: [])
   end
 end

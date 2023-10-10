@@ -12,11 +12,9 @@ Rails.application.routes.draw do
     resources :comments, except: :show
   end
 
-  namespace :user do
-    resources :posts
+  resource :user, except:[:new, :edit, :show, :update, :destroy, :create] do
+    resources :posts, only: :index
+    resources :comments, only: :index
   end
 
-  namespace :user do
-    resources :comments
-  end
 end

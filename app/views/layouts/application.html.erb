@@ -52,7 +52,10 @@
           <%= link_to 'Home', root_path, class: "nav-link #{'active' if action_name == 'index' }", 'aria-current': 'page' %>
         </li>
         <li class="nav-item">
-          <%= link_to 'Add New Post', new_post_path, class: "nav-link #{'active' if action_name == 'posts' }", 'aria-current': 'page' if user_signed_in? %>
+          <%= link_to 'My Post', user_posts_path, class: "nav-link #{'active' if action_name == 'posts' }", 'aria-current': 'page' if user_signed_in? %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Comment', user_comments_path, class: "nav-link #{'active' if action_name == 'posts' }", 'aria-current': 'page' if user_signed_in? %>
         </li>
         <li class="nav-item">
           <% if user_signed_in? %>
