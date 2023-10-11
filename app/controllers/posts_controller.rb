@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: :show
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def new
@@ -8,6 +9,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     if @post.save
       flash[:notice] = 'Post created successfully'
       redirect_to root_path
@@ -22,6 +24,7 @@ class PostsController < ApplicationController
   def edit; end
 
   def update
+    @post.user = current_user
     if @post.update(post_params)
       flash[:notice] = 'Post updated successfully'
       redirect_to root_path
@@ -44,6 +47,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :address, disaster_ids: [])
+    params.require(:post).permit(:title, :content, :address,:image, disaster_ids: [])
   end
 end

@@ -1,21 +1,53 @@
-<h1>show post id: <%= @post.id %></h1>
-<ul>
-  <li><%= @post.title %></li>
-  <li><%= @post.content %></li>
-  <li><%= @post.address %></li>
-</ul>
+<style>
 
-<h1>Title <%= @post.title %></h1>
-<h2>Comments</h2>
-<ul>
-  <% @post.comments.each do |comment| %>
-    <li>
-      <%= comment.content %>(<%= comment.created_at %>)
-      <%= link_to 'Edit', edit_post_comment_path(@post) %>
-      <%= button_to 'Delete', post_comment_path(@post), method: :delete %>
-    </li>
-  <% end %>
-</ul>
+</style>
+
+<div class="container1">
+  <div class="clearfix">
+    <h3><%= @post.title %></h3>
+
+    <div class="user_disaster">
+      <h5><%= @post.disasters.pluck(:name).join(',') %></h5>
+      <h7>By:<%= @post.user&.email %></h7>
+    </div>
+    <div class="image"><%= image_tag @post.image.url if @post.image.present? %></div>
+    <div class="content"><p><%= @post.content %></p></div>
+    <div class="address"><p><%= @post.address %></p></div>
+    <p>
+    </p>
+  </div>
+  <div class="comments">
+    <h3>Comments <span style="color: white;"><%= @post.comments_count %></span></h3>
+    <% @post.comments.each do |comment| %>
+      <div class="comments-border">
+        <div class="container-comments">
+          <div class="comments1"><%= comment.content %>
+            <span style="color: #825991;"> by </span><span style="color: #371f41;"><%= comment.user&.email %></span>
+          </div>
+
+          <%= link_to 'Edit', edit_post_comment_path(@post), class: 'btn btn-edit' if user_signed_in? && comment.user == current_user %>
+          <%= button_to 'Delete', post_comment_path(comment.post, comment), method: :delete, class: 'btn' if user_signed_in? && comment.user == current_user %>
+        </div>
+        <div class="created_at">Created at: <%= comment.created_at %></div>
+      </div>
+    <% end %>
+    <div class="add-comment"><%= link_to 'Add Comment', new_post_comment_path(@post), class: 'btn' %></div>
+  </div>
+  <div class="post-container">
+    <%= link_to 'Back', root_path, class: 'btn btn-home' %>
+    <%= link_to 'Add New Post', new_post_path, class: 'btn btn-success' %>
+    <%= button_to 'Delete', post_path(@post), method: :delete, class: 'btn btn-danger' if user_signed_in? && @post.user == current_user %>
+  </div>
+</div>
 
 
-<%= link_to 'Post List', root_path %>
+
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+Disaster.create!(name: "Tornado")
+
+Disaster.create!(name: "Landslide")
+
+Disaster.create!(name: "Typhoon")
+
+
 3.times do |i|
   User.create!(
     email: "#{Faker::Name.first_name.downcase}.#{Faker::Name.last_name.downcase}@gmail.com",

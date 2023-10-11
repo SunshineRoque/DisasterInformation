@@ -3,9 +3,9 @@ class Post < ApplicationRecord
   validates :content, presence: true
   validates :address, presence: true
 
-  has_many :post_disaster_ships
+  has_many :post_disaster_ships, dependent: :destroy
   has_many :disasters, through: :post_disaster_ships
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   belongs_to :user
   mount_uploader :image, ImageUploader

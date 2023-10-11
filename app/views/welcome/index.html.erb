@@ -1,41 +1,29 @@
 <h1>Welcome to DisasterInformation!</h1>
-<h1>Posts</h1>
-<table>
-  <thead>
-  <td>Author</td>
-  <td>Title</td>
-  <td>image</td>
-  <td>Content</td>
-  <td>Address</td>
-  <td>Disaster Type</td>
-  <td>Action</td>
-  </thead>
+<div class="container">
   <% @posts.each do |post| %>
-    <tr>
-      <td><%= post.user&.email %></td>
-      <td><%= post.title %></td>
-      <td><%= image_tag post.image.url if post.image.present? %></td>
-      <td><%= post.content %></td>
-      <td><%= post.address %></td>
-      <td><%= post.disasters.pluck(:name).join(',') %></td>
-      <td></td>
-      <td>
-        <%= link_to 'Show', post_path(post) %>
-        <%= link_to 'Comments', post_comments_path(post) %>
-        <%= post.comments_count %>
-        <%= link_to 'Add Comment', new_post_comment_path(post) %>
-        <% if user_signed_in? && post.user == current_user %>
-          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-warning' %>
-          <%= button_to 'Delete', post_path(post), method: :delete, class: 'btn btn-danger' %>
-        <% end %>
-      </td>
-      <td>
-        <% if @top_posts.include?(post) %>
-          <span class="hot-tag">HOT</span>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-<div class="paginate"><%= paginate @posts %></div>
+    <div class="clearfix ">
+      <h3><%= post.title %></h3>
 
+      <div class="user_disaster">
+        <h5><%= post.disasters.pluck(:name).join(',') %></h5>
+        <h7>By:<%= post.user&.email %></h7>
+      </div>
+      <div class="image"><%= image_tag post.image.url if post.image.present? %></div>
+      <div class="content"><p><%= post.content %></p></div>
+      <div class="address"><p><%= post.address %></p></div>
+      <p>
+      <div class="buttons">
+        <%= link_to 'Show', post_path(post), class: 'btn' %>
+        <%= link_to 'Comments ' "#{post.comments_count}", post_comments_path(post), class: 'btn' %>
+        <%= link_to 'Add Comment', new_post_comment_path(post), class: 'btn' %>
+        <div class="hot">
+          <% if @top_posts.include?(post) %>
+            <span class="hot-tag">HOT</span>
+          <% end %>
+        </div>
+      </div>
+      </p>
+    </div>
+  <% end %>
+</div>
+<div class="paginate"><%= paginate @posts %></div>

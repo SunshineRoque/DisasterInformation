@@ -1,39 +1,33 @@
-<h1>Your Posts!</h1>
-<h1>Posts</h1>
-<%= link_to 'Add New Post', new_post_path, class: 'btn btn-success' %>
-<table>
-  <thead>
-  <td>Author</td>
-  <td>Title</td>
-  <td>image</td>
-  <td>Content</td>
-  <td>Address</td>
-  <td>Disaster Type</td>
-  <td>Action</td>
-  </thead>
+<style>
+
+</style>
+
+<h1>Your Posts</h1>
+<div class="add-post"><%= link_to 'Add New Post', new_post_path, class: 'btn btn-success1' %></div>
+<div class="container">
   <% @posts.each do |post| %>
     <% if user_signed_in? && post.user == current_user %>
-      <tr>
-        <td><%= post.user&.email %></td>
-        <td><%= post.title %></td>
-        <td><%= image_tag post.image.url if post.image.present? %></td>
-        <td><%= post.content %></td>
-        <td><%= post.address %></td>
-        <td><%= post.disasters.pluck(:name).join(',') %></td>
-        <td></td>
-        <td>
-          <%= link_to 'Show', post_path(post) %>
-          <%= link_to 'Comments', post_comments_path(post) %>
-          <%= post.comments_count %>
-          <%= link_to 'Add Comment', new_post_comment_path(post) %>
-          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-warning' %>
-          <%= button_to 'Delete', post_path(post), method: :delete, class: 'btn btn-danger' %>
-        </td>
-      </tr>
+      <div class="clearfix ">
+        <h3><%= post.title %></h3>
+
+        <div class="user_disaster">
+          <h5><%= post.disasters.pluck(:name).join(',') %></h5>
+          <h7>By:<%= post.user&.email %></h7>
+        </div>
+        <div class="image"><%= image_tag post.image.url if post.image.present? %></div>
+        <div class="content"><p><%= post.content %></p></div>
+        <div class="address"><p><%= post.address %></p></div>
+        <p>
+        <div class="buttons">
+          <%= link_to 'Show', post_path(post), class: 'btn' %>
+          <%= link_to 'Comments ' "#{post.comments_count}", post_comments_path(post), class: 'btn' %>
+          <%= link_to 'Add Comment', new_post_comment_path(post), class: 'btn' %>
+          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-warning-edit' %>
+          <%= button_to 'Delete', root_path, method: :delete, class: 'btn btn-danger-edit' %>
+        </div>
+        </p>
+      </div>
     <% end %>
   <% end %>
-</table>
-
-
-
-
+</div>
+<div class="paginate"><%= paginate @posts %></div>

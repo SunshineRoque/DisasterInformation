@@ -6,9 +6,23 @@
       <% end %>
     </ul>
   <% end %>
-  <div>
-    <%= form.label :content %>
-    <%= form.text_field :content %>
+  <div class="container2">
+    <div class="comments">
+      <h3><%= @post.title %>
+        <span style="color: blue;"> by </span><span style="color: #5f4c75;"><%= @post.user&.email %></span></h3>
+      <div class="form1">
+        <%= form.label :comment %>
+        <%= form.text_field :content %>
+      </div>
+      <div class="submit">
+        <%= form.submit %>
+        <%= link_to 'Cancel', root_path, class: 'btn' %>
+      </div>
+      <!--      <div class="add-comment"><%#= link_to 'Send', new_post_comment_path(@post), class: 'btn' %></div>-->
+      <!--      <div class="add-comment"><%#= link_to 'Send', root_path, class: 'btn' %></div>-->
+    </div>
+    <div class="back1">
+      <%= link_to 'Back', root_path, class: 'btn btn-home' %>
+    </div>
   </div>
-  <%= form.submit %>
 <% end %>
