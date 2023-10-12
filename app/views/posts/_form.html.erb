@@ -1,29 +1,42 @@
-<%= form_with model: post do |form| %>
-  <% if post.errors.any? %>
-    <ul>
-      <% post.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
-    </ul>
+<div class="body">
+  <%= form_with model: post do |form| %>
+    <% if post.errors.any? %>
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="container4">
+      <%= hidden_field_tag 'from_my_post' %>
+      <div class="posts">
+        <div class="form2">
+          <div class="label"><%= form.label :title %></div>
+          <div class="text-field"><%= form.text_field :title, style: 'width: 600px;' %></div>
+        </div>
+        <div class="form2">
+          <div class="label"><%= form.label :content %></div>
+          <div class="text-field"><%= form.text_area :content, style: 'width: 600px; height: 300px' %></div>
+        </div>
+        <div class="form2">
+          <div class="label"><%= form.label :address %></div>
+          <div class="text-field"><%= form.text_field :address, style: 'width: 600px;' %></div>
+        </div>
+        <div class="form2">
+          <div class="label"><%= form.label :type_of_disaster %></div>
+          <%= form.collection_check_boxes :disaster_ids, Disaster.all, :id, :name, { inline: true } %>
+        </div>
+        <div class="form2">
+          <div class="label"><%= form.file_field :image %></div>
+        </div>
+        <div class="submit">
+          <%= form.submit style: 'width:100px; height:35px;' %>
+          <%= link_to 'Cancel', root_path, class: 'btn' %>
+        </div>
+      </div>
   <% end %>
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
-  <div>
-    <%= form.label :content %>
-    <%= form.text_field :content %>
-  </div>
-  <div>
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
-  <div>
-    <%= form.label :type_of_disaster %>
-    <%= form.collection_check_boxes :disaster_ids, Disaster.all, :id, :name %>
-  </div>
-  <div>
-    <%= form.file_field :image %>
-  </div>
-  <%= form.submit %>
-<% end %>
+</div>
+
+
+

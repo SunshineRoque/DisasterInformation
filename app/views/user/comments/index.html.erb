@@ -1,16 +1,32 @@
-<h2>Comments</h2>
-<ul>
-  <% @comments.each do |comment| %>
-    <% if user_signed_in? && comment.user == current_user %>
-      <li>
-        <%= comment.content %> by <%= comment.user&.email %>
-        <%= comment.content %>(<%= comment.created_at %>)
-        <%= link_to 'Edit', edit_post_comment_path(comment.post, comment) %>
-        <%= button_to 'Delete', post_comment_path(comment.post, comment), method: :delete %>
-        <%= link_to 'Add Comment', new_post_comment_path(comment.post, comment) %>
-      </li>
+<div class="container3">
+  <div class="comments">
+    <h3>Your <span style="color: #e8c8ff;">Comments </span></h3>
+    <% @comments.each do |comment| %>
+      <% if user_signed_in? && comment.user == current_user %>
+        <div class="comments-border">
+          <div class="box">
+            <div class="letterC"><h4><%= comment.post.title %></h4></div>
+            <div class="letterU"><h6>by:<%= comment.post.user&.email %></h6></div>
+          </div>
+          <div class="container-comments">
+            <div class="comments1"><%= comment.content %>
+              <span style="color: #825991;"> by </span><span style="color: #371f41;"><%= comment.user&.email %></span>
+            </div>
+            <%= link_to 'Edit', edit_post_comment_path(comment.post, comment), class: 'btn btn-edit' %>
+            <%= button_to 'Delete', post_comment_path(comment.post, comment), method: :delete, class: 'btn' %>
+            <div class="add-comment"><%= link_to 'Add Comment', new_post_comment_path(comment.post, comment), class: 'btn btn-add-com' %></div>
+          </div>
+          <div class="created_at">Created at: <%= comment.created_at %></div>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+    <div class="post-container">
+      <%= link_to 'Back Home', root_path, class: 'btn btn-home', style: 'width:150px;' %>
+      <%= link_to 'Add New Post', new_post_path, class: 'btn btn-success' %>
+    </div>
+  </div>
+</div>
 
 <div class="paginate"><%= paginate @comments %></div>
+
+

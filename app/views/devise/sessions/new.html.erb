@@ -1,26 +1,31 @@
-<h2>Log in</h2>
+<h3 class="create-post">Log in</h3>
+<div class="body">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="container6">
+      <div class="posts">
+        <div class="form2">
+          <div class="label"><%= f.label :email %><br/></div>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", style: 'width:320px;' %>
+        </div>
+        <div class="form2">
+          <div class="label"><%= f.label :password %><br/></div>
+          <%= f.password_field :password, autocomplete: "current-password", style: 'width:320px;' %>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
+        <% if devise_mapping.rememberable? %>
+          <div class="form2">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me, style: 'color:#6d008a;' %>
+          </div>
+        <% end %>
+        <%= link_to 'Forgot your password?', new_user_password_path, style: 'margin:20px;' %>
+        <div class="submit1">
+          <%= f.submit "Log in", class: 'btn' %>
+          <%= link_to 'Sign up', new_user_registration_path, class: 'btn' %>
+          <%= link_to 'Cancel', root_path, class: 'btn', style: 'background-color:purple;' %>
+        </div>
+      </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>

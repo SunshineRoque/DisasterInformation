@@ -30,6 +30,6 @@ end
   post.save
 
   10.times do
-    post.comments.create(content: Faker::Lorem.paragraph(sentence_count: 4))
+    post.comments.create(content: Faker::Lorem.paragraph(sentence_count: 4), user: User.all.sample)
   end
 end

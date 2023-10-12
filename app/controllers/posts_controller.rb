@@ -6,7 +6,6 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-
   def create
     @post = Post.new(post_params)
     @post.user = current_user
@@ -27,7 +26,7 @@ class PostsController < ApplicationController
     @post.user = current_user
     if @post.update(post_params)
       flash[:notice] = 'Post updated successfully'
-      redirect_to root_path
+      redirect_to user_posts_path
     else
       flash.now[:alert] = 'Post update failed'
       render :edit, status: :unprocessable_entity
@@ -37,7 +36,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:notice] = 'Post destroyed successfully'
-    redirect_to root_path
+    redirect_to user_posts_path
   end
 
   private
@@ -47,6 +46,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :address,:image, disaster_ids: [])
+    params.require(:post).permit(:title, :content, :address, :image, disaster_ids: [])
   end
 end
